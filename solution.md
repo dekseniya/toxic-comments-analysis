@@ -69,29 +69,27 @@ print(train.shape)
 
 ```
 
-# Some comments had multiple labling:
+### Some comments had multiple labling:
 
- 23 
-
-
+```
 print("Number of rows with multiple labling: ", (rowsums > 1).sum())
+```
 
 
-# We are mainly interested in frequencies of words for toxic comments, so it is needed to filter out rows which were labled as non-toxic:
+### We are mainly interested in frequencies of words for toxic comments, so it is needed to filter out rows which were labled as non-toxic:
 
-# ### Cheking for null values
+### Cheking for null values
 
- 24 
-
-
+```
 print(train.isnull().sum())
 print(test.isnull().sum())
+```
 
 
 ### Merging threat, severe_toxic and identity_hate into one category:
 
-### Hovewer these 3 categories aren't correlated with each other, but they also don't have hight correlation with any other category.
-### So merging is only based on small numbers of labled values in these categories.
+Hovewer these 3 categories aren't correlated with each other, but they also don't have hight correlation with any other category.
+So merging is only based on small numbers of labled values in these categories.
 
 ```
 train.corr()
@@ -214,7 +212,7 @@ train['tokenized'] = train['tokenized'].apply(lambda x: [item for item in x if 2
 test['tokenized'] = test['tokenized'].apply(lambda x: [item for item in x if 2 < len(item)<45])
 ```
 
-### Lemmatization is process of grouping together the inflected forms of a word so they can be analysed as a single item, identified by the word's lemma, or dictionary form.
+Lemmatization is process of grouping together the inflected forms of a word so they can be analysed as a single item, identified by the word's lemma, or dictionary form.
 
 ```
 lemmatizer = WordNetLemmatizer()
@@ -236,7 +234,29 @@ Count vectorizer will create vocabulary and count number of occurancy of each to
 
 minDf parameter define the minimum number od documents (in this case comments) where term appears.
  
- vocabSize specify maximum number of terms in the final vocabulary.
+vocabSize specify maximum number of terms in the final vocabulary.
+
+```
+no_features = 5000
+
+
+vectorizer = CountVectorizer(max_features = no_features)
+
+vectorizer.fit(train['tokenize_new'])
+train_counts = vectorizer.transform(train['tokenize_new'])
+
+test_counts = vectorizer.transform(test['tokenize_new'])
+
+
+feature_names = vectorizer.get_feature_names()
+
+print(train_counts.shape)
+print(type(train_counts))
+```
+Measure of how important a word may be is its term frequency (tf) - how frequently a word occurs in a document. Inverse document frequency (idf) decreases the weight for commonly used words and increases the weight for words that are not used very much in a collection of documents.
+
+IDF is computed as log(Total number of documents/Number of documents where specific term appearing)
+This can be combined with term frequency to calculate a term’s tf-idf, the frequency of a term adjusted for how rarely it is used. It is intended to measure how important a word is to a document in a collection (or corpus) of documents.
 
 
     
