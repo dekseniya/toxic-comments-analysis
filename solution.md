@@ -200,11 +200,11 @@ train.tail(10)
 ### Tokenize words:
 
 ### Tokenize each comment for adding to data frame
-
+```
 train['tokenized'] = train['comment_text'].apply(word_tokenize)
 
 test['tokenized'] = test['comment_text'].apply(word_tokenize)
-
+```
 ### Due to the Wikipedia the length of the longest word in major English dicitonary is 45. So we'll delete all words which are longer than 45, beacuse there are many nonsense words. Also remove all words that have 2 letters or less
  ```
 train['tokenized'] = train['tokenized'].apply(lambda x: [item for item in x if 2 < len(item)<45])
