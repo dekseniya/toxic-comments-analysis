@@ -28,4 +28,9 @@ from nltk.corpus import wordnet
 from nltk.stem import WordNetLemmatizer
 from nltk import pos_tag, pos_tag_sents
 sns.set(style="white", context="talk")
+pd.set_option('max_colwidth', -1)
 ```
+## Datatrain 
+pd.read_csv('C:/Users/kseniya.degtyar/Desktop/Dataset for training/train.csv')
+
+test = pd.read_csv('C:/Users/kseniya.degtyar/Desktop/Dataset for training/test.csv')
